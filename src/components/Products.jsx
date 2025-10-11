@@ -1,6 +1,6 @@
 import { Container, Carousel, Row, Col } from "react-bootstrap";
 
-function ProductListing() {
+function products() {
   return (
     <Container>
       <Row>
@@ -56,4 +56,4 @@ function ProductListing() {
   );
 }
 
-export default ProductListing;
+export default products;

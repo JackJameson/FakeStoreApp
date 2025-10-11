@@ -1,7 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import NavBar from './components/NavBar';
-import ProductListing from './components/ProductListing';
+import Products from './components/Products';
+import ProductDetails from './components/ProductDetails';
+import AddProduct from './components/AddProduct';
 
 function App() {
   return (
@@ -9,7 +11,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/product-listing" element={<ProductListing />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<ProductDetails />} />
+        <Route path="/addproduct" element={<AddProduct />} />
       </Routes>
     </>
   );

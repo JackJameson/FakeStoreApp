@@ -1,9 +1,8 @@
-// src/components/NavBar.jsx
-
 import { NavLink } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Container from "react-bootstrap/Container";
 
 function NavBar() {
   return (
@@ -15,8 +14,11 @@ function NavBar() {
           <Nav.Link as={NavLink} to="/" activeclassname="active">
             Home
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/product-listing" activeclassname="active">
-            Product Listing
+          <Nav.Link as={NavLink} to="/products" activeclassname="active">
+            Products
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/addproduct" activeclassname="active">
+            Add Product
           </Nav.Link>
           <NavDropdown title="Examples" id="basic-nav-dropdown">
             <NavDropdown.Item href="/user-form"> User Form</NavDropdown.Item>

@@ -14,7 +14,7 @@ function HomePage() {
           </p>
         </Col>
       </Row>
-      <Link to="/product-listing">
+      <Link to="/products">
         <Button variant="link" className="mt-5 text-decoration-none">
           Take me to the Product Listing!
         </Button>

@@ -1,59 +1,61 @@
-import { Container, Carousel, Row, Col } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Container, Carousel, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router";
 
-function products() {
+function Products() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => {
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Failed to fetch products. Please try again later.");
+        setLoading(false);
+      });
+  }, []);
+
+  if(loading) {
+    return <div>Loading...</div>;
+  }
+  if(error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <Container>
       <Row>
         <Col>
           <h3>Hi, welcome to the 🏠 page!</h3>
           <p>
-            This app will let you see all of the very important fake users
-            JSONPlaceholder gives us.
+            This app will let you see all of the very important fake products
           </p>
         </Col>
       </Row>
 
       <Row>
-        <Col>
-          <Carousel>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/1200/600?random=1"
-                alt="First slide"
-              />
-              <Carousel.Caption style={{ textShadow: "2px 2px black" }}>
-                <h3>First Slide</h3>
-                <p>Description for the first slide.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/1200/600?random=2"
-                alt="Second slide"
-              />
-              <Carousel.Caption style={{ textShadow: "2px 2px black" }}>
-                <h3>Second Slide</h3>
-                <p>Description for the second slide.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src="https://picsum.photos/1200/600?random=3"
-                alt="Third slide"
-              />
-              <Carousel.Caption style={{ textShadow: "2px 2px black" }}>
-                <h3>Third Slide</h3>
-                <p>Description for the third slide.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </Col>
+        {products.map((product) => (
+          <Col key={product.id} md={4} className="mb-4">
+            <Card>
+              <Card.Img variant="top" src={product.image} style={{ height: '300px', objectFit: 'contain' }} />
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>${product.price}</Card.Text>
+              </Card.Body>
+              <Link className="custom-link" to={"/products/" + product.id}>View Details</Link>
+            </Card>
+          </Col>
+        ))}
       </Row>
     </Container>
   );
 }
 
-export default products;
+export default Products;

@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import Products from './components/Products';
 import ProductDetails from './components/ProductDetails';
 import AddProduct from './components/AddProduct';
+import './App.css';
 
 function App() {
   return (

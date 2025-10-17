@@ -49,7 +49,7 @@ function Products() {
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>${product.price}</Card.Text>
               </Card.Body>
-              <Link className="custom-link" to={"/products/" + product.id}>View Details</Link>
+              <Card.Link href={`/products/${product.id}`}>View Details</Card.Link>
             </Card>
           </Col>
         ))}

@@ -15,7 +15,7 @@ function HomePage() {
         </Col>
       </Row>
       <Link to="/products">
-        <Button variant="link" className="mt-5 text-decoration-none">
+        <Button variant="success" className="mt-5 text-decoration-none">
           Take me to the Product Listing!
         </Button>
       </Link>

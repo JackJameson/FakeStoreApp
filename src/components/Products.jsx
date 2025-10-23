@@ -22,10 +22,10 @@ function Products() {
       });
   }, []);
 
-  if(loading) {
+  if (loading) {
     return <div>Loading...</div>;
   }
-  if(error) {
+  if (error) {
     return <div>{error}</div>;
   }
 
@@ -44,12 +44,23 @@ function Products() {
         {products.map((product) => (
           <Col key={product.id} md={4} className="mb-4">
             <Card>
-              <Card.Img variant="top" src={product.image} style={{ height: '300px', objectFit: 'contain' }} />
+              <Card.Img
+                variant="top"
+                src={product.image}
+                style={{ height: "300px", objectFit: "contain" }}
+              />
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>${product.price}</Card.Text>
               </Card.Body>
-              <Card.Link href={`/products/${product.id}`}>View Details</Card.Link>
+              <Link
+                to={`/products/${product.id}`}
+                className="px-3 pb-3 d-flex justify-content-center"
+              >
+                <Button variant="primary" className="w-75">
+                  View Details
+                </Button>
+              </Link>
             </Card>
           </Col>
         ))}

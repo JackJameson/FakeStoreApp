@@ -21,7 +21,7 @@ function ProductDetails() {
         setError("Failed to fetch product details. Please try again later.");
         setLoading(false);
       });
-  }, [id]);
+  });
 
   if (loading) {
     return <div>Loading...</div>;
@@ -35,18 +35,23 @@ function ProductDetails() {
 
   return (
     <Container>
-        <Row>
-            <Card>
-                <Card.Img variant="top" src={product.image} style={{ height: '500px', objectFit: 'contain' }} />
-                <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
-                    <Card.Text>${product.price}</Card.Text>
-                    <Card.Text>{product.description}</Card.Text>
-                </Card.Body>
-            </Card>
-        </Row>
+      <Row>
+        <Card>
+          <Card.Img
+            variant="top"
+            src={product.image}
+            style={{ height: "500px", objectFit: "contain" }}
+          />
+          <Card.Body>
+            <Card.Title>{product.title}</Card.Title>
+            <Card.Subtitle>{product.category}</Card.Subtitle>
+            <Card.Text>${product.price}</Card.Text>
+            <Card.Text>{product.description}</Card.Text>
+          </Card.Body>
+        </Card>
+      </Row>
     </Container>
-  )
+  );
 }
 
 export default ProductDetails;

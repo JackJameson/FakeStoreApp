@@ -21,7 +21,7 @@ function ProductDetails() {
         setError("Failed to fetch product details. Please try again later.");
         setLoading(false);
       });
-  });
+  }, [id]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -36,19 +36,27 @@ function ProductDetails() {
   return (
     <Container>
       <Row>
-        <Card>
-          <Card.Img
-            variant="top"
-            src={product.image}
-            style={{ height: "500px", objectFit: "contain" }}
-          />
-          <Card.Body>
-            <Card.Title>{product.title}</Card.Title>
-            <Card.Subtitle>{product.category}</Card.Subtitle>
-            <Card.Text>${product.price}</Card.Text>
-            <Card.Text>{product.description}</Card.Text>
-          </Card.Body>
-        </Card>
+        <Col md={8}>
+          <Card>
+            <Card.Img
+              variant="top"
+              src={product.image}
+              style={{ height: "500px", objectFit: "contain" }}
+            />
+            <Card.Body>
+              <Card.Title>{product.title}</Card.Title>
+              <Card.Subtitle>{product.category}</Card.Subtitle>
+              <Card.Text>${product.price}</Card.Text>
+              <Card.Text>{product.description}</Card.Text>
+            </Card.Body>
+            <div className="px-3 pb-3 d-flex justify-content-center">
+              <Button variant="primary" className="me-2">
+                Add To Cart
+              </Button>
+              <Button variant="danger">Delete</Button>
+            </div>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );

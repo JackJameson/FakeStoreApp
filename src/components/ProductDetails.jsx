@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 function ProductDetails() {
@@ -8,6 +8,7 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -33,9 +34,27 @@ function ProductDetails() {
     return <div>No product found.</div>;
   }
 
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `https://fakestoreapi.com/carts/${id}`
+      );
+      console.log(response.status);
+      alert("Product deleted successfully!");
+      navigate("/products");
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("Failed to delete the product.");
+    }
+  };
+
+  function handleCart() {
+    alert("Product deleted successfully!");
+  }
+
   return (
-    <Container>
-      <Row>
+    <Container className="my-5">
+      <Row className="justify-content-center">
         <Col md={8}>
           <Card>
             <Card.Img
@@ -50,10 +69,12 @@ function ProductDetails() {
               <Card.Text>{product.description}</Card.Text>
             </Card.Body>
             <div className="px-3 pb-3 d-flex justify-content-center">
-              <Button variant="primary" className="me-2">
+              <Button variant="primary" className="me-2" onClick={handleCart}>
                 Add To Cart
               </Button>
-              <Button variant="danger">Delete</Button>
+              <Button variant="danger" onClick={handleDelete}>
+                Delete
+              </Button>
             </div>
           </Card>
         </Col>

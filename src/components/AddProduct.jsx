@@ -10,7 +10,6 @@ function AddProduct() {
     title: "",
     price: "",
     description: "",
-    image: "",
     category: "",
   });
 
@@ -76,17 +75,6 @@ function AddProduct() {
             rows={3}
             name="description"
             value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formImage">
-          <Form.Label>Image URL</Form.Label>
-          <Form.Control
-            type="text"
-            name="image"
-            value={formData.image}
             onChange={handleChange}
             required
           />

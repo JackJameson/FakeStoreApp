@@ -3,7 +3,7 @@ import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import axios from "axios";
 
 function AddProduct() {
-  const [product, setProduct] = useState("");
+  // const [product, setProduct] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
@@ -91,7 +91,7 @@ function AddProduct() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="success" type="submit">
           Add Product
         </Button>
       </Form>

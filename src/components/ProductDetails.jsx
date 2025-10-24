@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+} from "react-bootstrap";
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     axios
@@ -34,10 +44,11 @@ function ProductDetails() {
     return <div>No product found.</div>;
   }
 
-  const handleDelete = async () => {
+  const confirmDelete = async () => {
+    handleClose();
     try {
       const response = await axios.delete(
-        `https://fakestoreapi.com/carts/${id}`
+        `https://fakestoreapi.com/products/${id}`
       );
       console.log(response.status);
       alert("Product deleted successfully!");
@@ -48,8 +59,12 @@ function ProductDetails() {
     }
   };
 
+  const handleDelete = () => {
+    handleShow();
+  };
+
   function handleCart() {
-    alert("Product deleted successfully!");
+    alert("Product added to cart successfully!");
   }
 
   return (
@@ -79,6 +94,23 @@ function ProductDetails() {
           </Card>
         </Col>
       </Row>
+
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete the product?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

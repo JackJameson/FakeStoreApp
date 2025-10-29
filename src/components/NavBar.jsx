@@ -20,10 +20,6 @@ function NavBar() {
           <Nav.Link as={NavLink} to="/addproduct" activeclassname="active">
             Add Product
           </Nav.Link>
-          <NavDropdown title="Examples" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/user-form"> User Form</NavDropdown.Item>
-            <NavDropdown.Item href="#">Something Else</NavDropdown.Item>
-          </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

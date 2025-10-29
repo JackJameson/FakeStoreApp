@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   Button,
@@ -10,17 +10,42 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-const initialFormData = {
-  title: "",
-  price: "",
-  description: "",
-  category: "",
-};
+// const initialFormData = {
+//   title: "",
+//   price: "",
+//   description: "",
+//   category: "",
+// };
 
-function AddProduct() {
-  const [product, setProduct] = useState(initialFormData);
+function EditProduct() {
+  // const [formData, setFormData] = useState(initialFormData);
+  const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+    axios
+      .get(`https://fakestoreapi.com/products/${id}`)
+      .then((response) => {
+        setProduct(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError("Failed to fetch product details. Please try again later.");
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  if (!product) {
+    return <div>No product found.</div>;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,14 +53,14 @@ function AddProduct() {
     setError(null);
 
     try {
-      const response = await axios.post("https://fakestoreapi.com/products", product);
-      console.log("Product added:", response.data);
-      alert("Product added successfully!");
-      setProduct(initialFormData);
+      const response = await axios.post("https://fakestoreapi.com/products", formData);
+      console.log("Product Edited:", response.data);
+      alert("Product Edited successfully!");
+      // setFormData(initialFormData);
     } catch (err) {
       console.error(err);
       setError(
-        "Failed to add product. Please try again."
+        "Failed to Edit product. Please try again."
       );
     } finally {
       setLoading(false);
@@ -44,8 +69,8 @@ function AddProduct() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProduct({
-      ...product,
+    setFormData({
+      ...formData,
       [name]: value,
     });
   };
@@ -54,7 +79,7 @@ function AddProduct() {
     <Container className="my-5">
       <Row className="justify-content-md-center">
         <Col md={8} lg={6}>
-          <h2 className="mb-4 text-center">Add New Product</h2>
+          <h2 className="mb-4 text-center">Edit Product</h2>
 
           {error && <Alert variant="danger">{error}</Alert>}
 
@@ -67,7 +92,7 @@ function AddProduct() {
                     <Form.Control
                       type="text"
                       name="title"
-                      value={product.title}
+                      value={formData.title}
                       onChange={handleChange}
                       required
                     />
@@ -79,7 +104,7 @@ function AddProduct() {
                     <Form.Control
                       type="number"
                       name="price"
-                      value={product.price}
+                      value={formData.price}
                       onChange={handleChange}
                       step="0.01"
                       min="0"
@@ -94,7 +119,7 @@ function AddProduct() {
                   as="textarea"
                   rows={3}
                   name="description"
-                  value={product.description}
+                  value={formData.description}
                   onChange={handleChange}
                   required
                 />
@@ -104,7 +129,7 @@ function AddProduct() {
                 <Form.Control
                   type="text"
                   name="category"
-                  value={product.category}
+                  value={formData.category}
                   onChange={handleChange}
                   required
                 />
@@ -125,10 +150,10 @@ function AddProduct() {
                       aria-hidden="true"
                       className="me-2"
                     />
-                    Adding...
+                    Editing...
                   </>
                 ) : (
-                  "Add Product"
+                  "Edit Product"
                 )}
               </Button>
             </Form>
@@ -139,4 +164,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default EditProduct;

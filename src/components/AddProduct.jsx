@@ -61,7 +61,7 @@ function AddProduct() {
           <div className="p-4 border rounded shadow-sm bg-white">
             <Form onSubmit={handleSubmit}>
               <Row>
-                <Col md={7}>
+                <Col md={9}>
                   <Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
@@ -73,7 +73,7 @@ function AddProduct() {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={5}>
+                <Col md={3}>
                   <Form.Group className="mb-3" controlId="formPrice">
                     <Form.Label>Price ($)</Form.Label>
                     <Form.Control

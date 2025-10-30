@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Form,
   Button,
@@ -10,20 +11,14 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-// const initialFormData = {
-//   title: "",
-//   price: "",
-//   description: "",
-//   category: "",
-// };
-
 function EditProduct() {
-  // const [formData, setFormData] = useState(initialFormData);
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  useEffect(() => {
     axios
       .get(`https://fakestoreapi.com/products/${id}`)
       .then((response) => {
@@ -53,15 +48,13 @@ function EditProduct() {
     setError(null);
 
     try {
-      const response = await axios.post("https://fakestoreapi.com/products", formData);
+      const response = await axios.put(`https://fakestoreapi.com/products/${id}`, product)
       console.log("Product Edited:", response.data);
       alert("Product Edited successfully!");
-      // setFormData(initialFormData);
+      navigate("/products");
     } catch (err) {
       console.error(err);
-      setError(
-        "Failed to Edit product. Please try again."
-      );
+      setError("Failed to Edit product. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -69,8 +62,8 @@ function EditProduct() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setProduct({
+      ...product,
       [name]: value,
     });
   };
@@ -86,25 +79,25 @@ function EditProduct() {
           <div className="p-4 border rounded shadow-sm bg-white">
             <Form onSubmit={handleSubmit}>
               <Row>
-                <Col md={7}>
+                <Col md={9}>
                   <Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
                       name="title"
-                      value={formData.title}
+                      value={product.title}
                       onChange={handleChange}
                       required
                     />
                   </Form.Group>
                 </Col>
-                <Col md={5}>
+                <Col md={3}>
                   <Form.Group className="mb-3" controlId="formPrice">
                     <Form.Label>Price ($)</Form.Label>
                     <Form.Control
                       type="number"
                       name="price"
-                      value={formData.price}
+                      value={product.price}
                       onChange={handleChange}
                       step="0.01"
                       min="0"
@@ -119,7 +112,7 @@ function EditProduct() {
                   as="textarea"
                   rows={3}
                   name="description"
-                  value={formData.description}
+                  value={product.description}
                   onChange={handleChange}
                   required
                 />
@@ -129,7 +122,7 @@ function EditProduct() {
                 <Form.Control
                   type="text"
                   name="category"
-                  value={formData.category}
+                  value={product.category}
                   onChange={handleChange}
                   required
                 />
